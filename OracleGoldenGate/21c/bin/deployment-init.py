@@ -14,6 +14,7 @@ import time
 import urllib.request
 import requests
 import psutil
+from security import safe_command
 
 
 default_ggschema     = 'ggadmin'
@@ -201,12 +202,12 @@ def establish_service_manager(hasServiceManager):
             option('authModes',                 'Digest-SHA-256,Digest,Basic') + \
             option('silent') + \
             option('nonsecure')
-        subprocess.call(shell_command, shell=True, env=deployment_env)
+        safe_command.run(subprocess.call, shell_command, shell=True, env=deployment_env)
         wait_for_service(service_ports['ServiceManager'])
         terminate_process('ServiceManager')
         reset_servicemanager_configuration()
 
-    return subprocess.call(os.path.join(deployment_env['OGG_HOME'], 'bin', 'ServiceManager'), env=deployment_env)
+    return safe_command.run(subprocess.call, os.path.join(deployment_env['OGG_HOME'], 'bin', 'ServiceManager'), env=deployment_env)
 
 
 def create_sqlnet_ora(directoryName):
@@ -245,7 +246,7 @@ def create_ogg_deployment():
         option('authModes',                 'Digest-SHA-256,Digest,Basic') + \
         option('silent') + \
         option('nonsecure')
-    subprocess.call(shell_command, shell=True, env=deployment_env)
+    safe_command.run(subprocess.call, shell_command, shell=True, env=deployment_env)
 
     for serviceName in ('adminsrvr', 'distsrvr', 'recvsrvr', 'pmsrvr'):
         wait_for_service(service_ports[serviceName])
