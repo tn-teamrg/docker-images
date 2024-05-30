@@ -7,15 +7,15 @@
 #
 # =============================
 import os
-import random
 import string
 import socket
+import secrets
 
 execfile('/u01/oracle/commonfuncs.py')
 
 # Functions
 def randomName():
-  return ''.join([random.choice(string.ascii_letters + string.digits) for n in xrange(6)])
+  return ''.join([secrets.choice(string.ascii_letters + string.digits) for n in xrange(6)])
 
 # AdminServer details
 cluster_name = os.environ.get("CLUSTER_NAME", "DockerCluster")
