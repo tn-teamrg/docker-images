@@ -201,7 +201,7 @@ def establish_service_manager(hasServiceManager):
             option('authModes',                 'Digest-SHA-256,Digest,Basic') + \
             option('silent') + \
             option('nonsecure')
-        subprocess.call(shell_command, shell=True, env=deployment_env)
+        subprocess.call(shell_command, shell=False, env=deployment_env)
         wait_for_service(service_ports['ServiceManager'])
         terminate_process('ServiceManager')
         reset_servicemanager_configuration()
@@ -245,7 +245,7 @@ def create_ogg_deployment():
         option('authModes',                 'Digest-SHA-256,Digest,Basic') + \
         option('silent') + \
         option('nonsecure')
-    subprocess.call(shell_command, shell=True, env=deployment_env)
+    subprocess.call(shell_command, shell=False, env=deployment_env)
 
     for serviceName in ('adminsrvr', 'distsrvr', 'recvsrvr', 'pmsrvr'):
         wait_for_service(service_ports[serviceName])
